@@ -8,7 +8,6 @@ from openai import OpenAI
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import warnings
-from rag_system import RAGSystem
 
 # Load environment variables
 load_dotenv("config.env")
@@ -39,7 +38,8 @@ class LLMClient:
         self.client = OpenAI(
             api_key=self.api_key)
         
-        # initialize RAG system
+        # initialize RAG system (lazy import to avoid circular dependency)
+        from rag_system import RAGSystem
         self.rag_system = RAGSystem()
         
         # System prompt

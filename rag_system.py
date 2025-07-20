@@ -8,12 +8,21 @@ from sentence_transformers import SentenceTransformer
 import psycopg2
 from psycopg2.extras import execute_values
 import re
-from unstructured.partition.pdf import partition_pdf
 import uuid
 import pdfplumber
 import pytesseract
 from PIL import Image
 from transformers import BlipProcessor, BlipForConditionalGeneration, DonutProcessor, VisionEncoderDecoderModel
+
+# Try to import unstructured with error handling for missing system dependencies
+try:
+    from unstructured.partition.pdf import partition_pdf
+    UNSTRUCTURED_AVAILABLE = True
+except ImportError as e:
+    UNSTRUCTURED_AVAILABLE = False
+    logging.warning(f"Unstructured library not available due to missing system dependencies: {e}")
+    logging.warning("PDF processing with unstructured will be disabled. Using fallback methods.")
+    partition_pdf = None
 
 # Load environment variables
 load_dotenv("config.env")
