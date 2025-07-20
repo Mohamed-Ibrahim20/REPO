@@ -1,0 +1,6 @@
+.env
+
+**/__pycache__/
+config.env
+logo.png 
+../knowledge_base/ 
