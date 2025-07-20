@@ -21,7 +21,9 @@ class LLMClient:
     
     def __init__(self):
         # LLM Configuration
-        self.api_key = os.getenv("API_KEY")
+        self.api_key = os.getenv("OPENAI_API_KEY", "").strip()
+        if not self.api_key:
+            raise ValueError("OPENAI_API_KEY is not set in config.env file. Please check your configuration.")
         self.model = os.getenv("MODEL", "gpt-4o")
         self.similarity_threshold = float(os.getenv("SIMILARITY_THRESHOLD", "0.55"))
         
